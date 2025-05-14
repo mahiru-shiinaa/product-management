@@ -1,7 +1,6 @@
 
 const mongoose = require("mongoose");
 
-const { default: mongoose } = require("mongoose");
 // Tạo khung dữ liệu
 const productSchema = new mongoose.Schema({
     title: String,
