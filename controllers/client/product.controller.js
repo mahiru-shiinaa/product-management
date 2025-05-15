@@ -1,6 +1,7 @@
 // Khai báo model lấy dữ liệu
 const Product = require("../../models/product.model");
 
+// [GET] /products
 module.exports.index = async (req, res) => {
   // Truy xuất dữ liệu từ data
   const products = await Product.find({
