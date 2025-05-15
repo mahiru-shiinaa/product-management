@@ -50,3 +50,31 @@
   transition: all 0.3s ease-in-out
 }
 /* End Sider */
+
+.badge.badge-danger {
+  background-color: #dc3545; /* Màu đỏ đặc trưng cho nguy hiểm/dừng */
+  color: #fff; /* Chữ màu trắng để tương phản */
+  display: inline-block; /* Hiển thị như một phần tử inline nhưng có thể thiết lập width/height */
+  padding: 0.25em 0.6em; /* Khoảng cách bên trong */
+  font-size: 0.75em; /* Kích thước chữ nhỏ hơn chữ thường */
+  font-weight: 700; /* Chữ đậm */
+  line-height: 1; /* Chiều cao dòng đơn */
+  text-align: center; /* Căn giữa chữ */
+  white-space: nowrap; /* Ngăn chữ xuống dòng */
+  vertical-align: baseline; /* Căn chỉnh theo dòng cơ sở */
+  border-radius: 0.25rem; /* Bo tròn góc */
+}
+
+.badge.badge-success {
+  background-color: #28a745; /* Màu xanh lá cây đặc trưng cho thành công/hoạt động */
+  color: #fff; /* Chữ màu trắng để tương phản */
+  display: inline-block;
+  padding: 0.25em 0.6em;
+  font-size: 0.75em;
+  font-weight: 700;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: 0.25rem;
+}
