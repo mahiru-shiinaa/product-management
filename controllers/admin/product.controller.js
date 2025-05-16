@@ -38,10 +38,20 @@ module.exports.index = async (req, res) => {
     find.status = req.query.status;
   }
 
+  // Tìm kiểm
+  let keyword = "";
+  if(req.query.keyword) {
+    keyword = req.query.keyword;
+    // RegExp dùng để tìm kiếm không chính xác, không phân biệt chữ hoa chữ thường
+    // Không cần gõ đúng title vẫn tìm đc thì dùng lệnh RegExp ở dưới
+    find.title = new RegExp(keyword, "i");
+  }
+
   const products = await Product.find(find);
   res.render("admin/pages/products/index", {
     pageTitle: "Product",
     products: products,
     filterStatus: filterStatus,
+    keyword: keyword
   });
 };
