@@ -13,7 +13,7 @@ if (buttonStatus.length > 0) {
       } else {
         url.searchParams.delete("status");
       }
-
+      
       window.location.href = url.href;
     });
   });

@@ -2,4 +2,4 @@ mixin filter-Status(filterStatus)
 	each item in filterStatus
 		button(
 			class=`btn btn-sm ms-2 btn-outline-success ${item.class}`
-			data-button-status=item.status) #{item.name}
+			button-status=item.status) #{item.name}
