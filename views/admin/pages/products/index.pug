@@ -2,6 +2,7 @@ extends ../../layouts/default.pug
 include ../../mixins/filter-Status.pug
 include ../../mixins/search.pug
 include ../../mixins/pagination.pug
+include ../../mixins/form-change-multi.pug
 
 block main
 	h1 Quản lý sản phẩm
@@ -16,23 +17,7 @@ block main
 	.card.mb-3
 		.card-header Danh sách sản phẩm
 		.card-body
-			form(
-				action=`${prefixAdmin}/products/change-multi?_method=PATCH`, 
-				method='POST'
-				form-change-multi
-				)
-				.d-flex.align-items-start.ms-2.mb-2
-					.form-group.ms-2
-						select(name='type', class="form-select")
-							option(value='active') Hoạt động
-							option(value='inactive') Dừng hoạt động
-					.form-group.ms-2
-						input(
-							type='text', 
-							name='ids', 
-							value='', 
-							class='form-control d-none')
-					button(type='submit', class='btn btn-primary', class="ms-2") Áp dụng
+			+form-change-multi(`${prefixAdmin}/products/change-multi?_method=PATCH`)
 			table(
 				class="table table-striped table-bordered table-hover", 
 				checkbox-multi
