@@ -50,3 +50,19 @@ module.exports.index = async (req, res) => {
     pagination: objectPagination,
   });
 };
+
+// [GET] /admin/products/change-status/:status/:id
+module.exports.changeStatus = async (req, res) => {
+  // params sẽ lấy đoạn param trên đường dẫn, req.params.status sẽ lấy nội dung của param.status
+  // param chứa route động
+  const status = req.params.status;
+  const id = req.params.id;
+  //
+  // updateOne dùng để cập nhập dựa theo trường id, object phía sau là cập nhập những trường nào
+  await Product.updateOne({ _id: id }, { status: status });
+  // redirect để khi cập nhập xong tự động chuyển hướng về trang mình nhập
+  // res.redirect(req.get("referer") thì nó sẽ quay về trang trước đó
+  res.redirect(req.get("referer") || "/admin/products");
+  
+  //res.redirect("/admin/products");
+};
