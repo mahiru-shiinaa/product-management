@@ -51,7 +51,7 @@ module.exports.index = async (req, res) => {
   });
 };
 
-// [GET] /admin/products/change-status/:status/:id
+// [PATCH] /admin/products/change-status/:status/:id
 module.exports.changeStatus = async (req, res) => {
   // params sẽ lấy đoạn param trên đường dẫn, req.params.status sẽ lấy nội dung của param.status
   // param chứa route động
@@ -66,3 +66,23 @@ module.exports.changeStatus = async (req, res) => {
   
   //res.redirect("/admin/products");
 };
+
+// [PATCH] /admin/products/change-status/:status/:id
+module.exports.changeMulti = async (req, res) => {
+  // Lấy key type của ô select bên form fornt-end
+  const type = req.body.type;
+  // lấy danh sách id bên input hidden bên form xong chuyển nó qua dạng string bằng split
+  const ids = req.body.ids.split(", ");
+  // dùng updateMany dùng để cập nhập dựa theo trường id, object phía sau là cập nhập những trường nào
+  await Product.updateMany({ _id: { $in: ids } }, { status: type });
+  // switch (type) {
+  //   case "active":
+  //     await Product.updateMany({ _id: { $in: ids } }, { status: "active" });
+  //     break;
+  //   case "inactive":
+  //     await Product.updateMany({ _id: { $in: ids } }, { status: "inactive" });
+  //     break;
+  // }
+   res.redirect(req.get("referer") || "/admin/products");
+};
+
