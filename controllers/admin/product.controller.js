@@ -64,6 +64,8 @@ module.exports.changeStatus = async (req, res) => {
   await Product.updateOne({ _id: id }, { status: status });
   // redirect để khi cập nhập xong tự động chuyển hướng về trang mình nhập
   // res.redirect(req.get("referer") thì nó sẽ quay về trang trước đó
+
+  req.flash("success", "Update status successfully!");
   res.redirect(req.get("referer") || "/admin/products");
 
   //res.redirect("/admin/products");
@@ -80,9 +82,11 @@ module.exports.changeMulti = async (req, res) => {
   switch (type) {
     case "active":
       await Product.updateMany({ _id: { $in: ids } }, { status: "active" });
+      req.flash("success", `Cập nhập trạng thái thành công của ${ids.length} sản phẩm`);
       break;
     case "inactive":
       await Product.updateMany({ _id: { $in: ids } }, { status: "inactive" });
+      req.flash("success", `Cập nhập trạng thái thành công của ${ids.length} sản phẩm`);
       break;
     case "delete-all":
       await Product.updateMany(
