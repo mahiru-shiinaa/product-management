@@ -63,7 +63,7 @@ module.exports.changeStatus = async (req, res) => {
   // redirect để khi cập nhập xong tự động chuyển hướng về trang mình nhập
   // res.redirect(req.get("referer") thì nó sẽ quay về trang trước đó
   res.redirect(req.get("referer") || "/admin/products");
-  
+
   //res.redirect("/admin/products");
 };
 
@@ -83,13 +83,21 @@ module.exports.changeMulti = async (req, res) => {
   //     await Product.updateMany({ _id: { $in: ids } }, { status: "inactive" });
   //     break;
   // }
-   res.redirect(req.get("referer") || "/admin/products");
-};
-
-// [DELETE] /admin/products/delete/:id
-module.exports.deleteItem = async (req, res) => {
-  const id = req.params.id;
-  await Product.deleteOne({ _id: id });
   res.redirect(req.get("referer") || "/admin/products");
 };
 
+// // [DELETE] /admin/products/delete/:id => Phương thức xóa cứng
+// module.exports.deleteItem = async (req, res) => {
+//   const id = req.params.id;
+//   await Product.deleteOne({ _id: id });
+//   res.redirect(req.get("referer") || "/admin/products");
+// };
+// [DELETE] /admin/products/delete/:id => Phương thức xóa cứng
+module.exports.deleteItem = async (req, res) => {
+  const id = req.params.id;
+  await Product.updateOne({ _id: id }, {
+     deleted: true,
+     deletedAt: new Date()
+     });
+  res.redirect(req.get("referer") || "/admin/products");
+};
