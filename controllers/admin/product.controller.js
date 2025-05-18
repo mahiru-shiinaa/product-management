@@ -39,8 +39,10 @@ module.exports.index = async (req, res) => {
   );
   // limit để set hiển thị bao nhiêu sản phẩm, skip để bỏ qua bao nhiêu sản phẩm rồi mới hiển thị
   const products = await Product.find(find)
+    .sort({ position: "desc" })
     .limit(objectPagination.limitItem)
     .skip(objectPagination.skip);
+
   res.render("admin/pages/products/index", {
     pageTitle: "Product",
     products: products,
@@ -83,10 +85,23 @@ module.exports.changeMulti = async (req, res) => {
       await Product.updateMany({ _id: { $in: ids } }, { status: "inactive" });
       break;
     case "delete-all":
-      await Product.updateMany({ _id: { $in: ids } }, {
-        deleted: true,
-        deletedAt: new Date()
-    })
+      await Product.updateMany(
+        { _id: { $in: ids } },
+        {
+          deleted: true,
+          deletedAt: new Date(),
+        }
+      );
+      break;
+    case "change-position":
+      for (const item of ids) {
+        let [id, position] = item.split("-");
+        position = parseInt(position);
+        await Product.updateOne({ _id: id }, { position: position });
+      }
+      break;
+    default:
+      break;
   }
   res.redirect(req.get("referer") || "/admin/products");
 };
@@ -100,9 +115,12 @@ module.exports.changeMulti = async (req, res) => {
 // [DELETE] /admin/products/delete/:id => Phương thức xóa cứng
 module.exports.deleteItem = async (req, res) => {
   const id = req.params.id;
-  await Product.updateOne({ _id: id }, {
-     deleted: true,
-     deletedAt: new Date()
-     });
+  await Product.updateOne(
+    { _id: id },
+    {
+      deleted: true,
+      deletedAt: new Date(),
+    }
+  );
   res.redirect(req.get("referer") || "/admin/products");
 };
