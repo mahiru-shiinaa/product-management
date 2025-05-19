@@ -2,6 +2,7 @@ const Product = require("../../models/product.model");
 const filterStatusHelper = require("../../helpers/filterStatus");
 const searchHelper = require("../../helpers/search");
 const paginationHelper = require("../../helpers/pagination");
+const systemConfig = require("../../config/system");
 
 // [GET] /admin/products
 module.exports.index = async (req, res) => {
@@ -130,4 +131,31 @@ module.exports.deleteItem = async (req, res) => {
   );
   req.flash("success", "Xóa thành công sản phẩm!");
   res.redirect(req.get("referer") || "/admin/products");
+};
+
+// [GET] /admin/products/create
+module.exports.create = (req, res) => {
+  res.render("admin/pages/products/create", { pageTitle: "Tạo sản phẩm" });
+};
+
+// [POST] /admin/products/create
+module.exports.createPost = async (req, res) => {
+  // chuyển kiểu dữ liệu quan int
+  req.body.price = parseInt(req.body.price);
+  req.body.stock = parseInt(req.body.stock);
+  req.body.discountPercentage = parseInt(req.body.discountPercentage);
+  
+  // Kiểm tra thử có nhập position không
+  if(req.body.position == "")  {
+    const countProduct = await Product.countDocuments({});
+    req.body.position = countProduct + 1;
+  } else {
+    req.body.position = parseInt(req.body.position);
+  }
+  
+  // Tạo 1 proudct mới nhưng chưa lưu
+  const product = new Product(req.body);
+  // Lưu vào database 
+  await product.save();
+  res.redirect(`${systemConfig.prefixAdmin}/products`);
 };
