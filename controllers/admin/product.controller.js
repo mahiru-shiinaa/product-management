@@ -146,16 +146,20 @@ module.exports.createPost = async (req, res) => {
   req.body.discountPercentage = parseInt(req.body.discountPercentage);
   
   // Kiểm tra thử có nhập position không
-  if(req.body.position == "")  {
+  if(req.body.position === "")  {
     const countProduct = await Product.countDocuments({});
     req.body.position = countProduct + 1;
   } else {
     req.body.position = parseInt(req.body.position);
   }
-  
+   if (req.file) {
+    req.body.thumbnail = `/uploads/${req.file.filename}`;
+  } else {
+    req.body.thumbnail = ""; // hoặc default ảnh
+  }
   // Tạo 1 proudct mới nhưng chưa lưu
-  const product = new Product(req.body);
-  // Lưu vào database 
-  await product.save();
+   const product = new Product(req.body);
+  // // Lưu vào database 
+   await product.save();
   res.redirect(`${systemConfig.prefixAdmin}/products`);
 };

@@ -6,6 +6,7 @@ block main
 	form(
 		action=`${prefixAdmin}/products/create`, 
 		id='form-create-product', 
+		enctype="multipart/form-data",
 		method='POST')
 		.mb-3
 			label(for='title', class='form-label') Tiêu đề
@@ -22,9 +23,9 @@ block main
 		.mb-3
 			label(for='stock', class='form-label') Số lượng
 			input(type='number', class='form-control', id='stock', name='stock', value='0', min='0')
-		.mb-3
-			label(for='thumbnail', class='form-label') Ảnh
-			input(type='text', class='form-control', id='thumbnail', name='thumbnail')
+		.input-group.mb-3
+			input(type='file', class='form-control', id='thumbnail', name='thumbnail', accept='image/*')
+			label.input-group-text(for="thumbnail") Upload
 		.mb-3
 			label(for='position', class='form-label') Vị trí
 			input(type='number', class='form-control', id='position', name='position', placeholder='Tự động tăng', min='1')
