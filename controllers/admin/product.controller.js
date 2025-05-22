@@ -142,9 +142,9 @@ module.exports.create = (req, res) => {
 module.exports.createPost = async (req, res) => {
   
   // chuyển kiểu dữ liệu quan int
-  req.body.price = parseInt(req.body.price);
+  req.body.price = parseFloat(req.body.price);
   req.body.stock = parseInt(req.body.stock);
-  req.body.discountPercentage = parseInt(req.body.discountPercentage);
+  req.body.discountPercentage = parseFloat(req.body.discountPercentage);
   
   // Kiểm tra thử có nhập position không
   if(req.body.position === "")  {
@@ -163,4 +163,43 @@ module.exports.createPost = async (req, res) => {
   // // Lưu vào database 
    await product.save();
   res.redirect(`${systemConfig.prefixAdmin}/products`);
+};
+
+// [GET] /admin/prodcut/edit/:id
+module.exports.edit = async (req, res) => {
+  try {
+    const idProduct = req.params.id;
+  const find = {
+    deleted: false,
+    _id: idProduct,
+  }
+  const product = await Product.findOne(find);
+ // const product = await Product.findOne({ _id: id });
+  res.render("admin/pages/products/edit", {
+     pageTitle: "Chỉnh sửa sản phẩm", 
+      product: product
+      });
+  } catch (error) {
+    res.redirect(`${systemConfig.prefixAdmin}/products`);
+  }
+};
+
+// [POST] /admin/products/edit/:id
+module.exports.editPatch = async (req, res) => {
+  const id = req.params.id;
+  req.body.price = parseFloat(req.body.price);
+  req.body.stock = parseInt(req.body.stock);
+  req.body.discountPercentage = parseFloat(req.body.discountPercentage);
+  req.body.position = parseInt(req.body.position);
+  if (req.file) {
+    req.body.thumbnail = `/uploads/${req.file.filename}`;
+  }
+  try {
+    await Product.updateOne({ _id: id }, req.body);
+    req.flash("success", "Update successfully!");
+  } catch (error) {
+    
+  }
+  
+  res.redirect(req.get("referer") || "/admin/products");
 };
