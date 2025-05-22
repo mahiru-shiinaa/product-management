@@ -140,6 +140,7 @@ module.exports.create = (req, res) => {
 
 // [POST] /admin/products/create
 module.exports.createPost = async (req, res) => {
+  
   // chuyển kiểu dữ liệu quan int
   req.body.price = parseInt(req.body.price);
   req.body.stock = parseInt(req.body.stock);

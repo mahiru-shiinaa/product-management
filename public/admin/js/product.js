@@ -83,7 +83,7 @@ formChangeMulti.addEventListener("submit", (e) => {
       }
     });
     inputIds.value = ids.join(", ");
-    formChangeMulti.submit();
+    e.target.submit();
   } else {
     alert("Vui lớn chọn ít nhất 1 bảng ghi");
   }
