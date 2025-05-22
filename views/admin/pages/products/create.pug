@@ -23,9 +23,9 @@ block main
 		.mb-3
 			label(for='stock', class='form-label') Số lượng
 			input(type='number', class='form-control', id='stock', name='stock', value='0', min='0')
-		.input-group.mb-3
-			input(type='file', class='form-control', id='thumbnail', name='thumbnail', accept='image/*')
-			label.input-group-text(for="thumbnail") Upload
+		.mb-3
+			input(type='file', upload-image, class='form-control', id='thumbnail', name='thumbnail', accept='image/*')
+			img(src="", alt="", upload-image-preview, class="image-preview")
 		.mb-3
 			label(for='position', class='form-label') Vị trí
 			input(type='number', class='form-control', id='position', name='position', placeholder='Tự động tăng', min='1')
