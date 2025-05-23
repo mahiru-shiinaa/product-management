@@ -70,6 +70,7 @@ block main
                     data-id=item.id,
                     class="badge badge-danger") ngưng hoạt động
               td
+                a(class="btn btn-secondary btn-sm", href=`${prefixAdmin}/products/detail/${item.id}`) Chi tiết
                 a(class="btn btn-warning btn-sm", href=`${prefixAdmin}/products/edit/${item.id}`) Sửa
                 button(
                   class="btn btn-danger btn-sm ml-1"

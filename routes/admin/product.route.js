@@ -22,7 +22,6 @@ const upload = multer({ storage: storage() });
     upload.single("thumbnail"), 
     validate.createPost,
     controller.createPost );
-  // router.get("/edit/:id", controller.edit);
-  // router.put("/edit/:id", controller.update);
+    router.get("/detail/:id", controller.detail);
 
 module.exports = router;
