@@ -7,7 +7,8 @@ const flash = require("express-flash");
 
 require("dotenv").config();
 const app = express();
-const port = process.env.PORT;
+const port = process.env.PORT || 3000;
+
 app.use(methodOverride("_method"));
 
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
@@ -19,10 +20,10 @@ const route = require("./routes/client/index.route");
 const adminRoute = require("./routes/admin/index.route");
 database.connect();
 
-app.set("views", "./views");
+app.set("views", `${__dirname}/views`);
 app.set("view engine", "pug");
 
-app.use(express.static("public"));
+app.use(express.static(`${__dirname}/public`));
 
 app.use(cookieParser("helloworldnenenene"));
 app.use(session({ cookie: { maxAge: 60000 } }));
