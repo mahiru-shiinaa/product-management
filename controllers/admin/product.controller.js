@@ -153,11 +153,11 @@ module.exports.createPost = async (req, res) => {
   } else {
     req.body.position = parseInt(req.body.position);
   }
-   if (req.file) {
-    req.body.thumbnail = `/uploads/${req.file.filename}`;
-  } else {
-    req.body.thumbnail = ""; // hoặc default ảnh
-  }
+  //  if (req.file) {
+  //   req.body.thumbnail = `/uploads/${req.file.filename}`;
+  // } else {
+  //   req.body.thumbnail = ""; // hoặc default ảnh
+  // }
   // Tạo 1 proudct mới nhưng chưa lưu
    const product = new Product(req.body);
   // // Lưu vào database 
