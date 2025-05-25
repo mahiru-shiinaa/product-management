@@ -1,4 +1,5 @@
 const express = require("express");
+var path = require('path');
 const methodOverride = require("method-override");
 const session = require("express-session");
 const cookieParser = require("cookie-parser");
@@ -28,6 +29,8 @@ app.use(express.static(`${__dirname}/public`));
 app.use(cookieParser("helloworldnenenene"));
 app.use(session({ cookie: { maxAge: 60000 } }));
 app.use(flash());
+
+app.use('/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce')));
 
 // App locial variables có thể sữ dụng ở trong tất cả các file pug
 app.locals.prefixAdmin = systemConfig.prefixAdmin;
