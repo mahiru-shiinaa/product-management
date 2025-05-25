@@ -148,7 +148,7 @@ module.exports.create = (req, res) => {
   res.render("admin/pages/products/create", { pageTitle: "Tạo sản phẩm" });
 };
 
-// [POST] /admin/products/create
+// [POST] /admin/products/create-form
 module.exports.createPost = async (req, res) => {
   
   // chuyển kiểu dữ liệu quan int
