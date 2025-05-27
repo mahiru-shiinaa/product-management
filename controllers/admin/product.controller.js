@@ -3,6 +3,8 @@ const filterStatusHelper = require("../../helpers/filterStatus");
 const searchHelper = require("../../helpers/search");
 const paginationHelper = require("../../helpers/pagination");
 const systemConfig = require("../../config/system");
+const ProductCategory = require("../../models/product-category.model");
+const createTree = require("../../helpers/createTree");
 
 // [GET] /admin/products
 module.exports.index = async (req, res) => {
@@ -144,8 +146,17 @@ module.exports.deleteItem = async (req, res) => {
 };
 
 // [GET] /admin/products/create
-module.exports.create = (req, res) => {
-  res.render("admin/pages/products/create", { pageTitle: "Tạo sản phẩm" });
+module.exports.create = async (req, res) => {
+    let find = {
+    deleted: false,
+  };
+ 
+
+  const categories = await ProductCategory.find(find);
+
+  const newCategories = createTree.tree(categories);
+  // console.log('newRecords', newRecords);
+  res.render("admin/pages/products/create", { pageTitle: "Tạo sản phẩm", categories: newCategories });
 };
 
 // [POST] /admin/products/create-form

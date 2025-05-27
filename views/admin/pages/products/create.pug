@@ -1,5 +1,6 @@
 extends ../../layouts/default.pug
 include ../../mixins/alert.pug
+include ../../mixins/select-tree.pug
 
 block main
 
@@ -15,6 +16,12 @@ block main
 		.mb-3
 			label(for='title', class='form-label') Tiêu đề
 			input(type='text', class='form-control', id='title', name='title', required=true)
+		.mb-3
+			label.form-label(for="product_category_id") Danh mục
+			select(name="product_category_id" id="product_category_id" class="form-control")
+				option(value="") -- Chọn danh mục --
+					if(categories)
+						+select-tree(categories)
 		.mb-3
 			label(for='desc', class='form-label') Mô tả
 			textarea(class='form-control textarea-mce', id='desc', name='description', rows='5')

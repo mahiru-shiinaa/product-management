@@ -12,6 +12,10 @@ const productSchema = new mongoose.Schema({
     stock: Number,
     discountPercentage: Number,
     position: Number,
+    product_category_id: {
+        type: String,
+        default: ""
+    },
     slug: {
         type: String,
         slug: "title",
