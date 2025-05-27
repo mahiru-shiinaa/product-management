@@ -23,4 +23,4 @@ const roleSchema = new mongoose.Schema({
 // Tạo model                  Tên model   Tên khung dữ liệu   Tên collection
 const Role = mongoose.model("Role", roleSchema, "roles");
 
-module.exports = Product;
+module.exports = Role;

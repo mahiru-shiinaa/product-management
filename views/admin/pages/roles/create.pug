@@ -1,0 +1,28 @@
+extends ../../layouts/default.pug
+
+block main
+  h1 Thêm mới nhóm quyền
+
+  form(action="/admin/roles/create" method="POST")
+    div(class="mb-3")
+      label(for="title" class="form-label") Tiêu đề
+      input(
+        type="text"
+        class="form-control"
+        id="title"
+        name="title"
+        required
+      )
+    div(class="mb-3")
+      label(for="desc" class="form-label") Mô tả
+      input(
+        type="text"
+        class="form-control"
+        id="desc"
+        name="description"
+      )
+    div
+      button(
+        type="submit"
+        class="btn btn-primary"
+      ) Tạo mới
