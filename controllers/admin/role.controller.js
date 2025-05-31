@@ -50,3 +50,36 @@ module.exports.editPatch = async (req, res) => {
     res.redirect(`${systemConfig.prefixAdmin}/roles`);
   }
 };
+
+//[GET] /admin/roles
+module.exports.permissions = async (req, res) => {
+  try {
+    let find = {
+      deleted: false,
+    };  
+    const records = await Role.find(find);
+    res.render(`admin/pages/roles/permissions`, {
+      pageTitle: "Phân quyền quyền",
+      records: records,
+    });
+    
+  } catch (error) {
+    res.redirect(req.get("referer") || `${systemConfig.prefixAdmin}/roles/permissions`);
+  }
+};
+
+
+module.exports.permissionsPatch = async (req, res) => {
+  try {
+    const permissions = JSON.parse(req.body.permissions);
+    for (const item of permissions) {
+      await Role.updateOne({ _id: item.id }, { permissions: item.permissions });
+    }
+    req.flash("success", "Cập nhật phân quyền thành công!");
+    // Phải có không nó load trang liên tục vì nó ko biết sau khi submit sẽ đi về đâu
+    res.redirect(req.get("referer") || `${systemConfig.prefixAdmin}/roles/permissions`);
+
+  } catch (error) {
+    res.redirect(`${systemConfig.prefixAdmin}/roles/permissions`);
+  }
+};
