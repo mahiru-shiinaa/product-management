@@ -3,7 +3,10 @@ const md5 = require("md5");
 const Account = require("../../models/account.model");
 
 module.exports.login = (req, res) => {
-    res.render("admin/pages/auth/login", { pageTitle: "Đăng nhập" });
+    if(req.cookies.token) return res.redirect("/admin/dashboard");
+    else {
+        res.render("admin/pages/auth/login", { pageTitle: "Đăng nhập" });
+    }
 };
 
 module.exports.loginPost = async (req, res) => {
@@ -31,4 +34,9 @@ module.exports.loginPost = async (req, res) => {
     res.cookie("token", account.token, { httpOnly: true });
     req.flash("success", "Login thành công!");
     res.redirect("/admin/dashboard");
+};
+
+module.exports.logout = (req, res) => {
+    res.clearCookie("token");
+    res.redirect("/admin/auth/login");
 };

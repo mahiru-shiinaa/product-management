@@ -1,7 +1,12 @@
 header.header
-  .container-fluid
-    .row.align-items-center
-      .col-3
-        .inner-logo
-          a(href="/admin/dashboard") ADMIN
-      .col-9
+	.container-fluid
+		.row.align-items-center
+			.col-3
+				.inner-logo
+					a(href="/admin/dashboard") ADMIN
+			.col-9
+				div(class="text-end") // Changed text-right to text-end for Bootstrap 5
+					a(
+						href=`${prefixAdmin}/auth/logout`
+						class="btn btn-danger btn-sm"
+					) Đăng xuất
