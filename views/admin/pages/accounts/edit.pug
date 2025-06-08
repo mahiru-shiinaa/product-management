@@ -2,98 +2,99 @@ extends ../../layouts/default.pug
 include ../../mixins/alert.pug
 
 block main
-	h1(class="mb-4") Chỉnh sửa tài khoản
+	if(role.permissions.includes("accounts_edit"))
+		h1(class="mb-4") Chỉnh sửa tài khoản
 
-	+alert-error(5000)
-	+alert-success(5000)
+		+alert-error(5000)
+		+alert-success(5000)
 
-	form(
-		action=`${prefixAdmin}/accounts/edit/${record._id}?_method=PATCH`
-		method="POST"
-		enctype="multipart/form-data"
-	)
-		.form-group.mb-3
-			label(for="fullName") Họ tên *
-			input(
-				type="text"
-				class="form-control"
-				id="fullName"
-				name="fullName"
-				required
-					value=record.fullName
-			)
-		.form-group.mb-3
-			label(for="email") Email *
-			input(
-				type="email"
-				class="form-control"
-				id="email"
-				name="email"
-				required
-					value=record.email
-			)
-		.form-group.mb-3
-			label(for="password") Mật khẩu *
-			input(
-				type="password"
-				class="form-control"
-				id="password"
-				name="password"
-				
+		form(
+			action=`${prefixAdmin}/accounts/edit/${record._id}?_method=PATCH`
+			method="POST"
+			enctype="multipart/form-data"
+		)
+			.form-group.mb-3
+				label(for="fullName") Họ tên *
+				input(
+					type="text"
+					class="form-control"
+					id="fullName"
+					name="fullName"
+					required
+						value=record.fullName
+				)
+			.form-group.mb-3
+				label(for="email") Email *
+				input(
+					type="email"
+					class="form-control"
+					id="email"
+					name="email"
+					required
+						value=record.email
+				)
+			.form-group.mb-3
+				label(for="password") Mật khẩu *
+				input(
+					type="password"
+					class="form-control"
+					id="password"
+					name="password"
 					
-			)
-		.form-group.mb-3
-			label(for="phone") Số điện thoại
-			input(
-				type="text"
-				class="form-control"
-				id="phone"
-				name="phone"
-					value=record.phone
-			)
-		.form-group.mb-3.upload-image
-			label(for="avatar") Avatar
-			input(
-				type="file"
-				class="form-control" 
-				id="avatar"
-				name="avatar"
-				accept="image/*"
-				upload-image-input
+						
+				)
+			.form-group.mb-3
+				label(for="phone") Số điện thoại
+				input(
+					type="text"
+					class="form-control"
+					id="phone"
+					name="phone"
+						value=record.phone
+				)
+			.form-group.mb-3.upload-image
+				label(for="avatar") Avatar
+				input(
+					type="file"
+					class="form-control" 
+					id="avatar"
+					name="avatar"
+					accept="image/*"
+					upload-image-input
 
-			)
-			img(
-				src=record.avatar
-				class="image-preview"
-				upload-image-preview
-			)
-		.form-group.mb-3
-			label(for="role_id") Phân quyền
-			select(name="role_id" id="role_id" class="form-control")
-				option(disabled selected) -- Chọn --
-				each role in roles
-					option(value=role.id
-						selected=(record.role_id == role._id ? true : flase)
-					) #{role.title}
-		.form-group.mb-3
-			div.form-check.form-check-inline
-				input(
-					type="radio"
-					class="form-check-input"
-					id="statusActive"
-					name="status"
-					value="active"
-					checked
 				)
-				label(for="statusActive" class="form-check-label" checked=(record.status == "active" ? true : flase)) Hoạt động
-			div.form-check.form-check-inline
-				input(
-					type="radio"
-					class="form-check-input"
-					id="statusInActive"
-					name="status"
-					value="inactive"
+				img(
+					src=record.avatar
+					class="image-preview"
+					upload-image-preview
 				)
-				label(for="statusInActive" class="form-check-label" checked=(record.status == "inactive" ? true : flase)) Dừng hoạt động
-		.form-group
-			button(type="submit" class="btn btn-primary") Cập nhập
+			.form-group.mb-3
+				label(for="role_id") Phân quyền
+				select(name="role_id" id="role_id" class="form-control")
+					option(disabled selected) -- Chọn --
+					each role in roles
+						option(value=role.id
+							selected=(record.role_id == role._id ? true : flase)
+						) #{role.title}
+			.form-group.mb-3
+				div.form-check.form-check-inline
+					input(
+						type="radio"
+						class="form-check-input"
+						id="statusActive"
+						name="status"
+						value="active"
+						checked
+					)
+					label(for="statusActive" class="form-check-label" checked=(record.status == "active" ? true : flase)) Hoạt động
+				div.form-check.form-check-inline
+					input(
+						type="radio"
+						class="form-check-input"
+						id="statusInActive"
+						name="status"
+						value="inactive"
+					)
+					label(for="statusInActive" class="form-check-label" checked=(record.status == "inactive" ? true : flase)) Dừng hoạt động
+			.form-group
+				button(type="submit" class="btn btn-primary") Cập nhập

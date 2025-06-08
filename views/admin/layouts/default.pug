@@ -9,16 +9,19 @@ html
     link(rel="stylesheet", href="/admin/css/style.css")
   body
 
-    include ../partials/header.pug
-    .body 
-      include ../partials/sider.pug
-      .main
-        block main
+    if(role.permissions.length > 0)
+      include ../partials/header.pug
+      .body 
+        include ../partials/sider.pug
+        .main
+          block main
 
-  footer footer
+      footer footer
 
-  script(src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js") 
-  script(src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js")
-  script(src='/tinymce/tinymce.min.js')
-  script(src='/admin/js/tinymce-config.js')
-  script(src="/admin/js/script.js") 
+      script(src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js") 
+      script(src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js")
+      script(src='/tinymce/tinymce.min.js')
+      script(src='/admin/js/tinymce-config.js')
+      script(src="/admin/js/script.js") 
+    else
+      h1 Bạn không có quyền truy cập

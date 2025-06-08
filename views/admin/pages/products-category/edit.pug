@@ -3,84 +3,85 @@ include ../../mixins/alert.pug
 include ../../mixins/select-tree.pug
 
 block main
-	h1.mb-4 Chỉnh sửa danh mục sản phẩm
+	if(role.permissions.includes("products-category_create"))
+		h1.mb-4 Chỉnh sửa danh mục sản phẩm
 
-	+alert-error(5000)
-	
-	form(
-		action=`${prefixAdmin}/products-category/edit/${record.id}?_method=PATCH`
-		method="POST"
-		enctype="multipart/form-data"
-	)
-		.mb-3
-			label.form-label(for="title") Tiêu đề
-			input.form-control(
-				type="text"
-				id="title"
-				name="title"
-				required
-                value=record.title
-			)
-		.mb-3
-			label.form-label(for="parent_id") Danh mục cha
-			select(name="parent_id" id="parent_id" class="form-control")
-				option(value="") -- Chọn danh mục cha --
-					if(categories)
-						+select-tree(categories,1,record.parent_id)
-						
-		.mb-3
-			label.form-label(for="desc") Mô tả
-			textarea.form-control(
-				type="text"
-				id="desc"
-				name="description"
-				rows="5"
-				textarea-mce
-                
-			) #{record.description}
-		.mb-3
-			input(
-				type='file', 
-				upload-image, 
-				class='form-control', 
-				id='thumbnail', 
-				name='thumbnail', 
-				accept='image/*')
-			img(
-				src=record.thumbnail, 
-				alt="", 
-				upload-image-preview, 
-				class="image-preview")
-		.mb-3
-			label.form-label(for="position") Vị trí
-			input.form-control(
-				type="number"
-				id="position"
-				name="position"
-				placeholder="Tự động tăng"
-				min="1"
-                value=record.position
-			)
-		.mb-3
-			.form-check.form-check-inline
-				input.form-check-input(
-					type="radio"
-					id="statusActive"
-					name="status"
-					value="active"
-					checked=(record.status == "active" ? true : flase)
+		+alert-error(5000)
+		
+		form(
+			action=`${prefixAdmin}/products-category/edit/${record.id}?_method=PATCH`
+			method="POST"
+			enctype="multipart/form-data"
+		)
+			.mb-3
+				label.form-label(for="title") Tiêu đề
+				input.form-control(
+					type="text"
+					id="title"
+					name="title"
+					required
+					value=record.title
 				)
-				label.form-check-label(for="statusActive") Hoạt động
-			.form-check.form-check-inline
-				input.form-check-input(
-					type="radio"
-					id="statusInactive"
-					name="status"
-					value="inactive"
-                    checked=(record.status == "inactive" ? true : flase)
+			.mb-3
+				label.form-label(for="parent_id") Danh mục cha
+				select(name="parent_id" id="parent_id" class="form-control")
+					option(value="") -- Chọn danh mục cha --
+						if(categories)
+							+select-tree(categories,1,record.parent_id)
+							
+			.mb-3
+				label.form-label(for="desc") Mô tả
+				textarea.form-control(
+					type="text"
+					id="desc"
+					name="description"
+					rows="5"
+					textarea-mce
+					
+				) #{record.description}
+			.mb-3
+				input(
+					type='file', 
+					upload-image, 
+					class='form-control', 
+					id='thumbnail', 
+					name='thumbnail', 
+					accept='image/*')
+				img(
+					src=record.thumbnail, 
+					alt="", 
+					upload-image-preview, 
+					class="image-preview")
+			.mb-3
+				label.form-label(for="position") Vị trí
+				input.form-control(
+					type="number"
+					id="position"
+					name="position"
+					placeholder="Tự động tăng"
+					min="1"
+					value=record.position
 				)
-				label.form-check-label(for="statusInactive") Dừng hoạt động
-		.mb-3
-			button.btn.btn-primary(
-				type="submit"
-			) Cập nhật
+			.mb-3
+				.form-check.form-check-inline
+					input.form-check-input(
+						type="radio"
+						id="statusActive"
+						name="status"
+						value="active"
+						checked=(record.status == "active" ? true : flase)
+					)
+					label.form-check-label(for="statusActive") Hoạt động
+				.form-check.form-check-inline
+					input.form-check-input(
+						type="radio"
+						id="statusInactive"
+						name="status"
+						value="inactive"
+						checked=(record.status == "inactive" ? true : flase)
+					)
+					label.form-check-label(for="statusInactive") Dừng hoạt động
+			.mb-3
+				button.btn.btn-primary(
+					type="submit"
+				) Cập nhật

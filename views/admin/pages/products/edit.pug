@@ -4,71 +4,72 @@ include ../../mixins/select-tree.pug
 
 block main
 
-  +alert-error(5000)
+  if(role.permissions.includes("products_edit"))
+    +alert-error(5000)
 
-  +alert-success("5000")
+    +alert-success("5000")
 
-  h1(class="mb-4") Chỉnh sửa sản phẩm
+    h1(class="mb-4") Chỉnh sửa sản phẩm
 
-  form(
-    action=`${prefixAdmin}/products/edit/${product._id}?_method=PATCH`, 
-    id='form-edit-product', 
-    enctype="multipart/form-data",
-    method='POST')
-    .mb-3
-      label(for='title', class='form-label') Tiêu đề
-      input(
-        type='text', 
-        class='form-control', 
-        id='title', 
-        name='title', 
-        required=true
-        value=product.title
-        )
-    .mb-3
-      label.form-label(for="product_category_id") Danh mục
-      select(name="product_category_id" id="product_category_id" class="form-control")
-        option(value="") -- Chọn danh mục --
-          if(categories)
-            +select-tree(categories, 1, product.product_category_id)
-    .mb-3
-      label(for='desc', class='form-label') Mô tả
-      textarea(
-        class='form-control textarea-mce', 
-        id='desc',
-          name='description', 
-          rows='5'
-          ) #{product.description}
-    .mb-3
-      label(for='price', class='form-label') Giá
-      input(
-        type='number',
-        step='any'
+    form(
+      action=`${prefixAdmin}/products/edit/${product._id}?_method=PATCH`, 
+      id='form-edit-product', 
+      enctype="multipart/form-data",
+      method='POST')
+      .mb-3
+        label(for='title', class='form-label') Tiêu đề
+        input(
+          type='text', 
           class='form-control', 
-          id='price', name='price',
-            value=product.price, min='0'
+          id='title', 
+          name='title', 
+          required=true
+          value=product.title
+          )
+      .mb-3
+        label.form-label(for="product_category_id") Danh mục
+        select(name="product_category_id" id="product_category_id" class="form-control")
+          option(value="") -- Chọn danh mục --
+            if(categories)
+              +select-tree(categories, 1, product.product_category_id)
+      .mb-3
+        label(for='desc', class='form-label') Mô tả
+        textarea(
+          class='form-control textarea-mce', 
+          id='desc',
+            name='description', 
+            rows='5'
+            ) #{product.description}
+      .mb-3
+        label(for='price', class='form-label') Giá
+        input(
+          type='number',
+          step='any'
+            class='form-control', 
+            id='price', name='price',
+              value=product.price, min='0'
 
-            )
-    .mb-3
-      label(for='discount', class='form-label') % Giảm giá
-      input(type='number', class='form-control', id='discount', step='0.1', name='discountPercentage', value=product.discountPercentage, min='0')
-    .mb-3
-      label(for='stock', class='form-label') Số lượng
-      input(type='number', class='form-control', id='stock', name='stock', value=product.stock, min='0')
-    .mb-3
-      input(type='file', upload-image, class='form-control', id='thumbnail', name='thumbnail', accept='image/*')
-      img(src=product.thumbnail, alt="", upload-image-preview, class="image-preview")
-    .mb-3
-      label(for='position', class='form-label') Vị trí
-      input(type='number', class='form-control', id='position', name='position', placeholder='Tự động tăng', min='1', value = product.position)
-    .form-check.form-check-inline.mb-3
-      input(type='radio', class='form-check-input', id='statusActive', name='status', value='active', checked=(product.status == "active" ? true : flase))
-      label(for='statusActive', class='form-check-label',) Hoạt động
-    .form-check.form-check-inline.mb-3
-      input(type='radio', class='form-check-input', id='statusInactive', name='status', value='inactive', checked=(product.status == "inactive" ? true : flase) )
-      label(for='statusInactive', class='form-check-label' ) Dừng hoạt động
-    .mb-3
-      button(type='submit', class='btn btn-primary') Cập nhật
+              )
+      .mb-3
+        label(for='discount', class='form-label') % Giảm giá
+        input(type='number', class='form-control', id='discount', step='0.1', name='discountPercentage', value=product.discountPercentage, min='0')
+      .mb-3
+        label(for='stock', class='form-label') Số lượng
+        input(type='number', class='form-control', id='stock', name='stock', value=product.stock, min='0')
+      .mb-3
+        input(type='file', upload-image, class='form-control', id='thumbnail', name='thumbnail', accept='image/*')
+        img(src=product.thumbnail, alt="", upload-image-preview, class="image-preview")
+      .mb-3
+        label(for='position', class='form-label') Vị trí
+        input(type='number', class='form-control', id='position', name='position', placeholder='Tự động tăng', min='1', value = product.position)
+      .form-check.form-check-inline.mb-3
+        input(type='radio', class='form-check-input', id='statusActive', name='status', value='active', checked=(product.status == "active" ? true : flase))
+        label(for='statusActive', class='form-check-label',) Hoạt động
+      .form-check.form-check-inline.mb-3
+        input(type='radio', class='form-check-input', id='statusInactive', name='status', value='inactive', checked=(product.status == "inactive" ? true : flase) )
+        label(for='statusInactive', class='form-check-label' ) Dừng hoạt động
+      .mb-3
+        button(type='submit', class='btn btn-primary') Cập nhật
 
 
 
