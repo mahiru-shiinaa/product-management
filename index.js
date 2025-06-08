@@ -5,6 +5,8 @@ const session = require("express-session");
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const flash = require("express-flash");
+const moment = require('moment');
+
 
 require("dotenv").config();
 const app = express();
@@ -34,6 +36,7 @@ app.use('/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce
 
 // App locial variables có thể sữ dụng ở trong tất cả các file pug
 app.locals.prefixAdmin = systemConfig.prefixAdmin;
+app.locals.moment = moment;
 
 // Routes
 route(app);

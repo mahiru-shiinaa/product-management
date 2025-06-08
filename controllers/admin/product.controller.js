@@ -5,6 +5,7 @@ const paginationHelper = require("../../helpers/pagination");
 const systemConfig = require("../../config/system");
 const ProductCategory = require("../../models/product-category.model");
 const createTree = require("../../helpers/createTree");
+const Account = require("../../models/account.model");
 
 // [GET] /admin/products
 module.exports.index = async (req, res) => {
@@ -55,6 +56,13 @@ module.exports.index = async (req, res) => {
     .sort(sort)
     .limit(objectPagination.limitItem)
     .skip(objectPagination.skip);
+  
+  for (const product of products) {
+    const user = await Account.findOne({ _id: product.createdBy.account_id }); 
+    if(user) {
+      product.accountFullName = user.fullName;
+    }
+  }
 
   res.render("admin/pages/products/index", {
     pageTitle: "Product",
@@ -151,7 +159,6 @@ module.exports.create = async (req, res) => {
     deleted: false,
   };
  
-
   const categories = await ProductCategory.find(find);
 
   const newCategories = createTree.tree(categories);
@@ -180,6 +187,11 @@ module.exports.createPost = async (req, res) => {
   //   req.body.thumbnail = ""; // hoặc default ảnh
   // }
   // Tạo 1 proudct mới nhưng chưa lưu
+  req.body.createdBy = {
+    account_id: res.locals.account.id
+    
+  }
+  
    const product = new Product(req.body);
   // // Lưu vào database 
    await product.save();
