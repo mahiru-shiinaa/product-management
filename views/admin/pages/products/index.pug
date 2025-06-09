@@ -55,6 +55,7 @@ block main
               th Vị trí
               th Trạng thái
               th Người tạo
+              th Ngày update
               th Hành động
           tbody
             each item, index in products
@@ -86,8 +87,15 @@ block main
                         class="badge badge-danger") ngưng hoạt động
                 td
                   p #{item.accountFullName}
-                  p 
-                    +formatDateTime(item.createdBy.createAt)
+                  if item.createdBy && item.createdBy.createAt
+                    p 
+                      +formatDateTime(item.createdBy.createAt)
+                td
+                  p #{item.accountFullNameUpdate}
+                  if item.updatedBy && item.updatedAtUpdate
+                    p 
+                      +formatDateTime(item.updatedAtUpdate)
+
 
 
                 td

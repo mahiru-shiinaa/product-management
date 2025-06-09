@@ -58,11 +58,26 @@ module.exports.index = async (req, res) => {
     .skip(objectPagination.skip);
 
   for (const product of products) {
+    // Lấy ra thông tin người tạo
     const user = await Account.findOne({ _id: product.createdBy.account_id });
     if (user) {
       product.accountFullName = user.fullName;
     }
+    // Lấy ra người cập nhật gần nhất
+    const updatedBy = product.updatedBy[product.updatedBy.length - 1];
+    // Lấy ra thông tin người cập nhập gần nhất
+    if (updatedBy) {
+      const userUpdate = await Account.findOne({ _id: updatedBy.account_id });
+      if (userUpdate) {
+        product.accountFullNameUpdate = userUpdate.fullName;
+        product.updatedAtUpdate = updatedBy.updatedAt;
+      }
+    }
+
   }
+
+  
+
 
   res.render("admin/pages/products/index", {
     pageTitle: "Product",
@@ -80,9 +95,14 @@ module.exports.changeStatus = async (req, res) => {
   // param chứa route động
   const status = req.params.status;
   const id = req.params.id;
+
+      const updatedBy = {
+      account_id: res.locals.account.id,
+      updatedAt: new Date(),
+    }
   //
   // updateOne dùng để cập nhập dựa theo trường id, object phía sau là cập nhập những trường nào
-  await Product.updateOne({ _id: id }, { status: status });
+  await Product.updateOne({ _id: id }, { status: status, $push: {updatedBy: updatedBy}});
   // redirect để khi cập nhập xong tự động chuyển hướng về trang mình nhập
   // res.redirect(req.get("referer") thì nó sẽ quay về trang trước đó
 
@@ -100,16 +120,21 @@ module.exports.changeMulti = async (req, res) => {
   const ids = req.body.ids.split(", ");
   // dùng updateMany dùng để cập nhập dựa theo trường id, object phía sau là cập nhập những trường nào
   // await Product.updateMany({ _id: { $in: ids } }, { status: type });
+
+      const updatedBy = {
+      account_id: res.locals.account.id,
+      updatedAt: new Date(),
+    }
   switch (type) {
     case "active":
-      await Product.updateMany({ _id: { $in: ids } }, { status: "active" });
+      await Product.updateMany({ _id: { $in: ids } }, { status: "active", $push: {updatedBy: updatedBy}});
       req.flash(
         "success",
         `Cập nhập trạng thái thành công của ${ids.length} sản phẩm`
       );
       break;
     case "inactive":
-      await Product.updateMany({ _id: { $in: ids } }, { status: "inactive" });
+      await Product.updateMany({ _id: { $in: ids } }, { status: "inactive", $push: {updatedBy: updatedBy}});
       req.flash(
         "success",
         `Cập nhập trạng thái thành công của ${ids.length} sản phẩm`
@@ -132,7 +157,7 @@ module.exports.changeMulti = async (req, res) => {
       for (const item of ids) {
         let [id, position] = item.split("-");
         position = parseInt(position);
-        await Product.updateOne({ _id: id }, { position: position });
+        await Product.updateOne({ _id: id }, { position: position, $push: {updatedBy: updatedBy}});
       }
       req.flash("success", `Đã đổi vị trí ${ids.length} sản phẩm`);
       break;
@@ -204,6 +229,7 @@ module.exports.createPost = async (req, res) => {
   // Tạo 1 proudct mới nhưng chưa lưu
   req.body.createdBy = {
     account_id: res.locals.account.id,
+    createAt: new Date(),
   };
 
   const product = new Product(req.body);
@@ -248,7 +274,12 @@ module.exports.editPatch = async (req, res) => {
     req.body.thumbnail = `/uploads/${req.file.filename}`;
   }
   try {
-    await Product.updateOne({ _id: id }, req.body);
+    const updatedBy = {
+      account_id: res.locals.account.id,
+      updatedAt: new Date(),
+    }
+    // update req.body cũ xong push thêm updatedBy mới vào
+    await Product.updateOne({ _id: id }, {...req.body, $push: {updatedBy: updatedBy}});
     req.flash("success", "Update successfully!");
   } catch (error) {}
 
