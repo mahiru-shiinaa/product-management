@@ -47,7 +47,7 @@ module.exports.createPost = async (req, res) => {
   await record.save();
   res.redirect(`${systemConfig.prefixAdmin}/accounts`);
 };
-
+//[GET] /admin/accounts/edit
 module.exports.edit = async (req, res) => {
   try {
     const id = req.params.id;
@@ -63,6 +63,7 @@ module.exports.edit = async (req, res) => {
   }
 };
 
+//[PATCH] /admin/accounts/edit
 module.exports.editPatch = async (req, res) => {
   try {
     const id = req.params.id;
