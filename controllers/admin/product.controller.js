@@ -209,6 +209,8 @@ module.exports.create = async (req, res) => {
 
 // [POST] /admin/products/create-form
 module.exports.createPost = async (req, res) => {
+  const permissions = res.locals.role.permissions;
+  if(!permissions.includes('product_create')) return res.render('admin/pages/403');
   // chuyển kiểu dữ liệu quan int
   req.body.price = parseFloat(req.body.price);
   req.body.stock = parseInt(req.body.stock);
