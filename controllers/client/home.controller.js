@@ -11,7 +11,11 @@ module.exports.index = async (req, res) => {
     status: "active",
     deleted: false,
     featured: "1"
-  }).limit(4);
+  }).sort({ position: "desc" }).limit(4);
+  const productsNew = await Product.find({
+    status: "active",
+    deleted: false,
+  }).sort({ position: "desc" }).limit(4);
   const newProducts = productsHelper.priceNewProducts(productsFeatured);
   const productsCategory = await ProductCategory.find({ deleted: false });
 
@@ -19,6 +23,7 @@ module.exports.index = async (req, res) => {
   res.render("client/pages/home/index", {
     pageTitle: "Trang chủ",
     layoutProductsCategory: newProductsCategory,
-    productsFeatured: newProducts
+    productsFeatured: newProducts,
+    productsNew: productsNew
   });
 };
