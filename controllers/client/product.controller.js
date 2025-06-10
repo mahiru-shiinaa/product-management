@@ -2,6 +2,7 @@
 const Product = require("../../models/product.model");
 const ProductCategory = require("../../models/product-category.model");
 const productCategoryHelper = require("../../helpers/products-category");
+const productHelper = require("../../helpers/products");
 
 // [GET] /products
 module.exports.index = async (req, res) => {
@@ -24,15 +25,22 @@ module.exports.index = async (req, res) => {
   });
 };
 
-// [GET] /products/:slug
+// [GET] /products/:slugProduct
 module.exports.detail = async (req, res) => {
   try {
-    const slug = req.params.slug;
+    const slug = req.params.slugProduct;
     const product = await Product.findOne({
       slug: slug,
       status: "active",
       deleted: false,
     });
+    const category = await ProductCategory.findOne({
+      _id: product.product_category_id,
+      status: "active",
+      deleted: false,
+    })
+    product.category = category;
+    productHelper.priceNewProduct(product);
     res.render("client/pages/products/detail", {
       pageTitle: product.title,
       product: product,
