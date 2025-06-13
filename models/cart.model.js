@@ -7,7 +7,7 @@ const cartSchema = new mongoose.Schema(
     // Dùng để thêm thời gian tạo và cập nhật sản phẩm tự động
     {
         user_id: String,
-        product: [
+        products: [
             {
                 product_id: String,
                 quantity: Number
