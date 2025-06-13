@@ -55,3 +55,15 @@ module.exports.delete = async (req, res) => {
   req.flash("success", "Delete from cart successfully!");
   res.redirect(req.get("referer") || "/cart");
 };
+
+//[GET] /cart/update/:productId/:quantity
+module.exports.update = async (req, res) => {
+  const cartId = req.cookies.cart_id;
+  const productId = req.params.productId;
+  const quantity = parseInt(req.params.quantity);
+  await Cart.updateOne(
+    { _id: cartId, "products.product_id": productId },
+    { $set: { "products.$.quantity": quantity } }
+  );
+  res.redirect(req.get("referer") || "/cart");
+};
