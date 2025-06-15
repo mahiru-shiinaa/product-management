@@ -9,5 +9,9 @@ const validate = require("../../validates/client/user.validate");
   router.get("/login", controller.login);
   router.post("/login", validate.loginPost, controller.loginPost);
   router.get("/logout", controller.logout);
+  router.get("/password/forgot", controller.forgotPassword);
+  router.get("/password/otp", controller.otpPassword);
+  router.post("/password/otp", controller.otpPasswordPost);
+  router.post("/password/forgot", validate.forgotPasswordPost, controller.forgotPasswordPost);
 
 module.exports = router;

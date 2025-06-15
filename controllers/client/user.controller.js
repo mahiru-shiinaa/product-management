@@ -1,4 +1,7 @@
 const User = require("../../models/user.model");
+const ForgotPassword = require("../../models/forgot-password.model");
+const generateHelper = require("../../helpers/generate");
+
 //[GET] /user/register
 const md5 = require("md5");
 module.exports.register = (req, res) => {
@@ -54,3 +57,55 @@ module.exports.logout = (req, res) => {
     res.clearCookie("tokenUser");
     res.redirect("/");
 };
+
+//[GET] /user/password/forgot
+module.exports.forgotPassword = (req, res) => {
+    res.render("client/pages/user/forgot-password", { pageTitle: "Quên mật khẩu" });
+};
+
+//[POST] /user/password/forgot
+module.exports.forgotPasswordPost = async  (req, res) => {
+    const email = req.body.email;
+    const user = User.findOne({ email: email, deleted: false });
+    if(!user) {
+        req.flash("error", "Email không tồn tại");
+        res.redirect("/user/password/forgot");
+        return;
+    }
+    // Việc 1: Tạo mã Otp và lưu thông tin OTP và Email yêu cầu vào collection
+    const otp = generateHelper.generateRandomNumber()
+    const objectForgotPassword = {
+        email: email,
+        otp: otp,
+        expiresAt: Date.now()
+    }
+    const forgotPassword = new ForgotPassword(objectForgotPassword);
+    await forgotPassword.save();
+    console.log('objectForgotPassword', objectForgotPassword);
+
+    // Việc 2: Gửi mã OPT qua email của user
+
+    // Việc 3: Hành động khi người dùng nháp mật khuẩu mới
+    res.redirect(`/user/password/otp?email=${email}`);
+};
+
+//[GET] /user/password/otp
+module.exports.otpPassword = (req, res) => {
+    const email = req.query.email;
+    res.render("client/pages/user/otp-password", { pageTitle: "Nhập mã OTP xác thực", email: email });
+};
+
+//[POST] /user/password/otp
+module.exports.otpPasswordPost = async (req, res) => {
+    const email = req.body.email;
+    const otp = req.body.otp;
+    const result = await ForgotPassword.findOne({email: email, otp: otp });
+    if(!result) {
+        req.flash("error", "Sai mã OTP");
+        res.redirect(`/user/password/otp?email=${email}`);
+        return;
+    } 
+    const user = await User.findOne({ email: email, deleted: false });
+    res.cookie("tokenUser", user.tokenUser, { httpOnly: true });
+    res.send("OK");
+}
