@@ -24,3 +24,27 @@ module.exports.registerPost = async (req, res) => {
 
     res.redirect("/");
 };
+
+//[GET] /user/login
+module.exports.login = (req, res) => {
+    res.render("client/pages/user/login", { pageTitle: "Đăng nhập tài khoản" });
+};
+//[POST] /user/login
+module.exports.loginPost = async (req, res) => {
+    const email = req.body.email;
+    const password = md5(req.body.password);
+    const user = await User.findOne({ email:email, deleted: false });
+    if(!user) {
+      req.flash("error", "Sai email");
+      res.redirect("/user/login");
+      return;
+    }
+    if(user.password != password) {
+        req.flash("error", "Sai mật khẩu");
+        res.redirect("/user/login");
+        return;
+    } 
+    res.cookie("tokenUser", user.tokenUser, { httpOnly: true });
+    req.flash("success", "Đăng nhập tài khoản thành công");
+    res.redirect("/");
+};
