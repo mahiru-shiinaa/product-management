@@ -29,13 +29,13 @@ for(const product of cart.products) {
     const objectProduct = {
         product_id: product.product_id,
         quantity: product.quantity,
-        discountPercent: 0,
+        discountPercentage: 0,
         price: 0
     }
     const productInfo = await Product.findOne({ _id: product.product_id });
     productHelper.priceNewProduct(productInfo);
     objectProduct.price = productInfo.priceNew;
-    objectProduct.discountPercent = productInfo.discountPercentage;
+    objectProduct.discountPercentage = productInfo.discountPercentage;
     products.push(objectProduct);
     
 }
@@ -51,4 +51,17 @@ await order.save();
 await Cart.updateOne({ _id: cartId }, { $set: { products: [] } });
 
 res.redirect("/checkout/success/" + order._id);
+};
+
+// [GET] /checkout/success/:orderId
+module.exports.success = async (req, res) => {
+    const id = req.params.orderId;
+    const order = await Order.findOne({ _id: id });
+    for ( const product of order.products) {
+      const productInfo = await Product.findOne({ _id: product.product_id }).select("title thumbnail priceNew discountPercentage");
+      product.productInfo = productInfo;
+      product.totalPrice = product.quantity*product.price;
+    }
+    order.totalPrice = order.products.reduce((sum, item) => sum + item.totalPrice, 0);
+    res.render("client/pages/checkout/success", { pageTitle: "Đặt hàng thành công", order: order });
 };
