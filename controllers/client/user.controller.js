@@ -126,3 +126,8 @@ module.exports.resetPasswordPost =  async (req, res) => {
     await User.updateOne({ tokenUser: tokenUser }, { $set: { password: password } });
     res.redirect("/");
 };
+
+//[GET] /user/info
+module.exports.info = (req, res) => {
+    res.render("client/pages/user/info", { pageTitle: "Thống tin tài khoản" });
+};
