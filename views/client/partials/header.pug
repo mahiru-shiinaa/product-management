@@ -2,11 +2,12 @@ include ../mixins/sub-menu.pug
 
 header.header
   .container
+
     .row.align-items-center
       .col-3
         .inner-logo
           a(href="/")
-            img(src="/images/logo.png", alt="Logo")
+            img(src=(settingGeneral.logo ? settingGeneral.logo : "/images/logo.png"), alt="Logo")
       .col-5
         form(action="/search" method="GET" class="d-flex") 
           input(
