@@ -112,7 +112,7 @@ module.exports.changeStatus = async (req, res) => {
   //res.redirect("/admin/products");
 };
 
-// [PATCH] /admin/products/change-status/:status/:id
+// [PATCH] /admin/products/change-muliti/:status/:id
 module.exports.changeMulti = async (req, res) => {
   // Lấy key type của ô select bên form fornt-end
   const type = req.body.type;

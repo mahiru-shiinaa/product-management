@@ -43,3 +43,23 @@ module.exports.forgotPasswordPost = (req, res, next) => {
   next();
 
 }
+module.exports.resetPasswordPost = (req, res, next) => {
+    if(req.body.password === "") {
+    req.flash("error", "Vui lòng nhập password");
+    res.redirect(req.get("referer"));
+    return;
+  }
+    if(req.body.confirmPassword === "") {
+    req.flash("error", "Vui lòng nhập password");
+    res.redirect(req.get("referer"));
+    return;
+  }
+  if(req.body.password !== req.body.confirmPassword) {
+    req.flash("error", "Mật khuẩu không giống nhau");
+    res.redirect(req.get("referer"));
+    return;
+  }
+
+  next();
+
+}

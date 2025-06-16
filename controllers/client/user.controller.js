@@ -1,9 +1,11 @@
 const User = require("../../models/user.model");
 const ForgotPassword = require("../../models/forgot-password.model");
 const generateHelper = require("../../helpers/generate");
+var md5 = require("md5");
+
+const sendMailHelper = require("../../helpers/sendMail");
 
 //[GET] /user/register
-const md5 = require("md5");
 module.exports.register = (req, res) => {
     res.render("client/pages/user/register",  { pageTitle: "Đăng ký tài khoản" });
 };
@@ -84,6 +86,8 @@ module.exports.forgotPasswordPost = async  (req, res) => {
     console.log('objectForgotPassword', objectForgotPassword);
 
     // Việc 2: Gửi mã OPT qua email của user
+    const subject = "Mã OTP xác minh lấy lại mật khẩu";
+    sendMailHelper.sendMail(email, subject, otp);
 
     // Việc 3: Hành động khi người dùng nháp mật khuẩu mới
     res.redirect(`/user/password/otp?email=${email}`);
@@ -107,5 +111,18 @@ module.exports.otpPasswordPost = async (req, res) => {
     } 
     const user = await User.findOne({ email: email, deleted: false });
     res.cookie("tokenUser", user.tokenUser, { httpOnly: true });
-    res.send("OK");
+    res.redirect("/user/password/reset");
 }
+
+//[GET] /user/password/reset
+module.exports.resetPassword = (req, res) => {
+    res.render("client/pages/user/reset-password", { pageTitle: "Đổi mật khẩu" });
+};
+
+//[POST] /user/password/reset
+module.exports.resetPasswordPost =  async (req, res) => {
+    const password = md5(req.body.password);
+    const tokenUser = req.cookies.tokenUser;
+    await User.updateOne({ tokenUser: tokenUser }, { $set: { password: password } });
+    res.redirect("/");
+};

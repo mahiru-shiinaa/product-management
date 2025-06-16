@@ -12,6 +12,8 @@ const validate = require("../../validates/client/user.validate");
   router.get("/password/forgot", controller.forgotPassword);
   router.get("/password/otp", controller.otpPassword);
   router.post("/password/otp", controller.otpPasswordPost);
+  router.get("/password/reset", controller.resetPassword);
+  router.post("/password/reset", validate.resetPasswordPost, controller.resetPasswordPost);
   router.post("/password/forgot", validate.forgotPasswordPost, controller.forgotPasswordPost);
 
 module.exports = router;
