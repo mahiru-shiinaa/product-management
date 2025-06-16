@@ -34,6 +34,7 @@ app.use(flash());
 
 app.use('/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce')));
 
+
 // App locial variables có thể sữ dụng ở trong tất cả các file pug
 app.locals.prefixAdmin = systemConfig.prefixAdmin;
 app.locals.moment = moment;
@@ -41,6 +42,10 @@ app.locals.moment = moment;
 // Routes
 route(app);
 adminRoute(app);
+
+app.get('/{*any}', (req, res) => {
+  res.render("client/pages/errors/404");
+});
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
