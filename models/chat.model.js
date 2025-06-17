@@ -23,4 +23,4 @@ const chatSchema = new mongoose.Schema(
 // Tạo model                  Tên model   Tên khung dữ liệu   Tên collection
 const Chat = mongoose.model("Chat", chatSchema, "chats");
 
-module.exports = Chat;
+module.exports = Chat; 

@@ -340,6 +340,10 @@
 
 .chat .inner-name {
   font-weight: bold;
+  display: block;
+}
+.chat .inner-incoming .inner-name {
+  display: inline;
 }
 
 .chat .inner-body {
@@ -349,11 +353,12 @@
   background-color: #f8f9fa;
 }
 
-.chat .inner-incoming,
+
 .chat .inner-outgoing {
   display: flex;
   margin-bottom: 10px;
 }
+
 
 .chat .inner-incoming {
   justify-content: flex-start;
@@ -367,20 +372,19 @@
   background-color: #e2e3e5; /* Màu nền cho tin nhắn đến */
   border-radius: 15px;
   padding: 8px 12px;
-  max-width: 70%; /* Giới hạn chiều rộng tin nhắn */
+  max-width: 30%; /* Giới hạn chiều rộng tin nhắn */
 }
 
 .chat .inner-outgoing .inner-content {
   background-color: #fee5ee; /* Màu hồng cho tin nhắn đi */
   border-radius: 15px;
   padding: 8px 12px;
-  max-width: 70%; /* Giới hạn chiều rộng tin nhắn */
+  max-width: 30%; /* Giới hạn chiều rộng tin nhắn */
 }
 
 /* Tùy chỉnh tên người gửi cho tin nhắn đến (nếu muốn) */
 .chat .inner-incoming .inner-name {
   margin-right: 8px;
-  font-weight: normal; /* Giảm độ đậm nếu không muốn quá nổi bật */
   color: #555;
   align-self: flex-end; /* Căn chỉnh tên với cuối tin nhắn */
 }

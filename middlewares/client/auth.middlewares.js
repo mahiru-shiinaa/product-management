@@ -5,13 +5,15 @@ module.exports.requireAuth = async (req, res, next) => {
     return res.redirect("/user/login");
   } else {
     // .select("-password"); không trả về password
-    const user = await User.findOne({ tokenUser: req.cookies.tokenUser }).select(
-      "-password"
-    );
+    const user = await User.findOne({
+      tokenUser: req.cookies.tokenUser,
+    }).select("-password");
 
     if (!user) {
       return res.redirect("/user/login");
+    } else {
+      res.locals.user = user;
+      next();
     }
-    next();
   }
 };
