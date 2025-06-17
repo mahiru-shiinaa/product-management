@@ -12,6 +12,15 @@ require("dotenv").config();
 const app = express();
 const port = process.env.PORT || 3000;
 
+const http = require('http');
+const server = http.createServer(app);
+const { Server } = require("socket.io");
+const io = new Server(server);
+
+io.on('connection', (socket) => {
+  console.log('a user connected', socket.id);
+});
+
 app.use(methodOverride("_method"));
 
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
@@ -47,6 +56,6 @@ app.get('/{*any}', (req, res) => {
   res.render("client/pages/errors/404");
 });
 
-app.listen(port, () => {
+server.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
