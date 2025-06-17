@@ -304,3 +304,123 @@
     display: none;
   }
 }
+
+/* chat.css */
+
+.chat {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden; /* Đảm bảo nội dung không tràn ra ngoài border-radius */
+  display: flex;
+  flex-direction: column;
+  height: 60vh; /* Ví dụ chiều cao, bạn có thể điều chỉnh */
+  max-height: 500px; /* Hoặc một chiều cao tối đa cụ thể */
+}
+
+.chat .inner-head {
+  padding: 10px 15px;
+  background-color: #f0f2f5;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  align-items: center;
+}
+
+.chat .inner-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #ccc; /* Màu nền cho avatar placeholder */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  color: #fff;
+  margin-right: 10px;
+}
+
+.chat .inner-name {
+  font-weight: bold;
+}
+
+.chat .inner-body {
+  flex-grow: 1;
+  padding: 15px;
+  overflow-y: auto; /* Cho phép cuộn khi nội dung tràn */
+  background-color: #f8f9fa;
+}
+
+.chat .inner-incoming,
+.chat .inner-outgoing {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.chat .inner-incoming {
+  justify-content: flex-start;
+}
+
+.chat .inner-outgoing {
+  justify-content: flex-end;
+}
+
+.chat .inner-incoming .inner-content {
+  background-color: #e2e3e5; /* Màu nền cho tin nhắn đến */
+  border-radius: 15px;
+  padding: 8px 12px;
+  max-width: 70%; /* Giới hạn chiều rộng tin nhắn */
+}
+
+.chat .inner-outgoing .inner-content {
+  background-color: #fee5ee; /* Màu hồng cho tin nhắn đi */
+  border-radius: 15px;
+  padding: 8px 12px;
+  max-width: 70%; /* Giới hạn chiều rộng tin nhắn */
+}
+
+/* Tùy chỉnh tên người gửi cho tin nhắn đến (nếu muốn) */
+.chat .inner-incoming .inner-name {
+  margin-right: 8px;
+  font-weight: normal; /* Giảm độ đậm nếu không muốn quá nổi bật */
+  color: #555;
+  align-self: flex-end; /* Căn chỉnh tên với cuối tin nhắn */
+}
+/* Ẩn tên người gửi cho tin nhắn đi vì không hiển thị trong ảnh */
+.chat .inner-outgoing .inner-name {
+  display: none;
+}
+
+
+.chat .inner-foot {
+  padding: 10px 15px;
+  border-top: 1px solid #eee;
+  background-color: #f0f2f5;
+}
+
+.chat .inner-form {
+  display: flex;
+  align-items: center;
+}
+
+.chat .inner-form input[type="text"] {
+  flex: 1;
+  height: 32px;
+  border: 1px solid #ddd;
+  border-radius: 15px;
+  padding: 0 10px;
+  outline: none;
+}
+
+.chat .inner-form button {
+  border-radius: 15px;
+  border: 1px solid #fe5da3;
+  background-color: #fe5da3;
+  color: #fff;
+  height: 32px;
+  padding: 0 10px;
+  cursor: pointer;
+  margin-left: 10px; /* Khoảng cách giữa input và button */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
