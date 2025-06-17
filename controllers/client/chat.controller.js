@@ -11,6 +11,12 @@ module.exports.index = async (req, res) => {
         content: content,
       });
       await chat.save();
+      //Trả data về client
+      _io.emit("SEVER_RETURN_MESSAGE", {
+        user_id: userId,
+        fullName: res.locals.user.fullName,
+        content: content,
+      });
     });
   });
   const chats = await Chat.find({
