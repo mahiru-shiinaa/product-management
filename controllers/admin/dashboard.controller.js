@@ -45,7 +45,7 @@ module.exports.dashboard = async (req, res) => {
   statistic.user.total = await User.countDocuments({ deleted: false });
   statistic.user.active = await User.countDocuments({ status: "active", deleted: false });
   statistic.user.inactive = await User.countDocuments({ status: "inactive", deleted: false });
-
+  
   res.render("admin/pages/dashboard/index", {
     pageTitle: "Dashboard",
     statistic: statistic,

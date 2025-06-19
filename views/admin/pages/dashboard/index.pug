@@ -8,14 +8,14 @@ block main
 			.card
 				.card-header Thông tin tài khoản
 				.card-body
-					if (user.avatar)
-						img(src=user.avatar style="height: 100px; margin-bottom: 15px;")
-					if (user.fullName)
-						p Họ tên: #[b #{user.fullName}]
-					if (user.email)
-						p Email: #[b #{user.email}]
-					if (user.phone)
-						p Số điện thoại: #[b #{user.phone}]
+					if (account.avatar)
+						img(src=account.avatar style="height: 100px; margin-bottom: 15px;")
+					if (account.fullName)
+						p Họ tên: #[b #{account.fullName}]
+					if (account.email)
+						p Email: #[b #{account.email}]
+					if (account.phone)
+						p Số điện thoại: #[b #{account.phone}]
 					if (role && role.title) 
 						p Phân quyền: #[b #{role.title}]
 		.col-6
