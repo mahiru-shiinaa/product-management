@@ -378,14 +378,14 @@
   background-color: #e2e3e5; /* Màu nền cho tin nhắn đến */
   border-radius: 15px;
   padding: 8px 12px;
-  max-width: 30%; /* Giới hạn chiều rộng tin nhắn */
+  max-width: 40%; /* Giới hạn chiều rộng tin nhắn */
 }
 
 .chat .inner-outgoing .inner-content {
   background-color: #fee5ee; /* Màu hồng cho tin nhắn đi */
   border-radius: 15px;
   padding: 8px 12px;
-  max-width: 30%; /* Giới hạn chiều rộng tin nhắn */
+  max-width: 40%; /* Giới hạn chiều rộng tin nhắn */
 }
 
 /* Tùy chỉnh tên người gửi cho tin nhắn đến (nếu muốn) */
@@ -451,3 +451,73 @@
           opacity: 1;
           transition: opacity 0.3s ease-in-out;
       }
+
+/* box-typing */
+.box-typing {
+  position: relative;
+}
+
+.box-typing .inner-dots {
+  position: relative;
+  height: 20px;
+  width: 50px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #efefef;
+  border-radius: 45px;
+  margin-top: 2px;
+}
+
+.box-typing .inner-dots span {
+  animation: blink 1.5s infinite;
+  height: 5px;
+  width: 5px;
+  background: #252525;
+  border-radius: 50%;
+  display: inline-block;
+  margin: 0 3px;
+}
+
+.box-typing .inner-dots span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.box-typing .inner-dots span:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes blink {
+  0% {
+    opacity: 0.1;
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.1;
+  }
+}
+
+/* End box-typing */
+
+.btn-upload {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #f0f0f0;
+  border-radius: 6px;
+  padding: 6px 10px;
+  cursor: pointer;
+}
+
+.btn-upload i {
+  font-size: 18px;
+  color: #555;
+}
+
+.filepond--wrapper {
+  margin-top: 10px;
+  max-width: 300px;
+}

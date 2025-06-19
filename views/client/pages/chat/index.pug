@@ -19,12 +19,29 @@ block main
 								.inner-name #{chat.infoUser.fullName}
 								.inner-content
 									| #{chat.content}
+						div(class="inner-list-typing")
 					.inner-foot
 						form(class="inner-form" action="")
 							input(type="text" placeholder="Nhập nội dung..." name="content")
+							div.custom-file-container(data-upload-id="myUploader")
+								label Upload ảnh 
+									a.custom-file-container__image-clear(href="javascript:void(0)", title="Clear Image") ×
+								label.custom-file-container__custom-file
+									input.custom-file-container__custom-file__custom-file-input(type="file", accept="image/*", multiple)
+									input(type="hidden", name="MAX_FILE_SIZE", value="10485760")
+									span.custom-file-container__custom-file__custom-file-control
+								.custom-file-container__image-preview
 							span(class="button-icon btn btn-light mx-2") <i class="fa-regular fa-face-smile"></i>
 							button
 								i.fa-solid.fa-paper-plane
-								
+
 	div(class="tooltip" role="tooltip")
 		emoji-picker(class="light")
+
+
+
+
+
+
+
+
