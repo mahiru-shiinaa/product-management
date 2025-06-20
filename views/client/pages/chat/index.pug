@@ -17,21 +17,30 @@ block main
 						each chat in chats
 							div(class=(chat.infoUser.id == user.id ? 'inner-outgoing' : 'inner-incoming'))
 								.inner-name #{chat.infoUser.fullName}
-								.inner-content
-									| #{chat.content}
+								if(chat.content)
+									.inner-content
+										| #{chat.content}
+								if(chat.images)
+									.inner-images
+										each image in chat.images
+											img(src=image)
 						div(class="inner-list-typing")
+					.inner-preview-image
+						div.custom-file-container(data-upload-id="myUploader")
+							a.custom-file-container__image-clear(href="javascript:void(0)", title="Clear Image")
+							label.custom-file-container__custom-file
+								input.custom-file-container__custom-file__custom-file-input#uploadInput(type="file", accept="image/*", multiple)
+								input(type="hidden", name="MAX_FILE_SIZE", value="10485760")
+								span.custom-file-container__custom-file__custom-file-control.d-none
+							.custom-file-container__image-preview
 					.inner-foot
 						form(class="inner-form" action="")
 							input(type="text" placeholder="Nhập nội dung..." name="content")
-							div.custom-file-container(data-upload-id="myUploader")
-								label Upload ảnh 
-									a.custom-file-container__image-clear(href="javascript:void(0)", title="Clear Image") ×
-								label.custom-file-container__custom-file
-									input.custom-file-container__custom-file__custom-file-input(type="file", accept="image/*", multiple)
-									input(type="hidden", name="MAX_FILE_SIZE", value="10485760")
-									span.custom-file-container__custom-file__custom-file-control
-								.custom-file-container__image-preview
+							label.ms-2.me-2(for="uploadInput") 
+								<i class="fa-solid fa-image"></i>
+
 							span(class="button-icon btn btn-light mx-2") <i class="fa-regular fa-face-smile"></i>
+
 							button
 								i.fa-solid.fa-paper-plane
 

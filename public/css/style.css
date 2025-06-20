@@ -313,8 +313,8 @@
   overflow: hidden; /* Đảm bảo nội dung không tràn ra ngoài border-radius */
   display: flex;
   flex-direction: column;
-  height: 60vh; /* Ví dụ chiều cao, bạn có thể điều chỉnh */
-  max-height: 500px; /* Hoặc một chiều cao tối đa cụ thể */
+  height: 100vh; /* Ví dụ chiều cao, bạn có thể điều chỉnh */
+  min-height: 500px; /* Hoặc một chiều cao tối đa cụ thể */
 }
 
 .chat .inner-head {
@@ -359,20 +359,16 @@
 .chat .inner-outgoing {
   display: flex;
   margin-bottom: 10px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
 }
 .chat .inner-incoming {
   display: flex;
   flex-wrap: wrap;
   margin-bottom: 10px;
-}
-
-.chat .inner-incoming {
   justify-content: flex-start;
 }
 
-.chat .inner-outgoing {
-  justify-content: flex-end;
-}
 
 .chat .inner-incoming .inner-content {
   background-color: #e2e3e5; /* Màu nền cho tin nhắn đến */
@@ -499,6 +495,56 @@
   }
 }
 
+.chat .inner-body .inner-images {
+  margin-top: 10px;
+  width: 100%;
+}
+.chat .inner-body .inner-images img {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  background: #efefef;
+  padding: 10px;
+  margin: 0 5px 5px 0;
+  border-radius: 5px;
+}
+
+.chat .inner-body {
+  min-height: 100px;
+}
+
+.chat .inner-body .inner-outgoing .inner-images {
+  
+  text-align: right;
+}
+
+.chat .inner-body .inner-outgoing .inner-images img {
+  margin: 0 0 5px 5px;
+}
+.custom-file-container__image-multi-preview {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+}
+.custom-file-container__image-preview {
+  height: auto;
+  width: 100%;
+  margin: 0px;
+  overflow: hidden;
+}
+.custom-file-container__image-preview custom-file-container__image-preview--active {
+  height: auto;
+  margin: 0px;
+}
+.custom-file-container__custom-file {
+display: none;
+}
+
+custom-file-container__image-clear {
+  display: none;
+}
+
+
 /* End box-typing */
 
 .btn-upload {
@@ -521,3 +567,5 @@
   margin-top: 10px;
   max-width: 300px;
 }
+
+
