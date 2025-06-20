@@ -11,8 +11,12 @@ if (formSendData) {
     const content = formSendData.content.value;
     const images = upload.cachedFileArray || [];
     if (content || images.length > 0) {
-      socket.emit("CLIENT_SEND_MESSAGE", content);
+      socket.emit("CLIENT_SEND_MESSAGE", {
+        content: content,
+        images: images,
+      });
       formSendData.content.value = "";
+      upload.resetPreviewPanel();
       socket.emit("CLIENT_SEND_TYPING", "hide");
     }
   });
