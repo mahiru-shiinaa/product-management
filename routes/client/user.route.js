@@ -17,4 +17,6 @@ const authMiddlewares = require("../../middlewares/client/auth.middlewares");
   router.post("/password/reset", validate.resetPasswordPost, controller.resetPasswordPost);
   router.post("/password/forgot", validate.forgotPasswordPost, controller.forgotPasswordPost);
   router.get("/info", authMiddlewares.requireAuth, controller.info);
+
+  
 module.exports = router;
