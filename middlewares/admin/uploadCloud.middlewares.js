@@ -1,10 +1,11 @@
 const  uploadToCloudinary  = require("../../helpers/uploadCloudinary");
-module.exports.upload = (req, res, next) => {
+module.exports.upload = async (req, res, next) => {
   if (req.file) {
-    const result = uploadToCloudinary(req.file.buffer);
+    const result = await uploadToCloudinary(req.file.buffer); // THÊM AWAIT
     req.body[req.file.fieldname] = result;
   }
   next();
 };
+
 
 
