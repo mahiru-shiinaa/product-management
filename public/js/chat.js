@@ -41,9 +41,11 @@ socket.on("SEVER_RETURN_MESSAGE", (data) => {
   let htmlContent = "";
   let htmlImages = "";
   const body = document.querySelector(".chat .inner-body");
+
   const div = document.createElement("div");
   const myId = document.querySelector(".chat").getAttribute("my-id");
   const boxTyping = document.querySelector(".chat .inner-list-typing");
+
   if (myId === data.user_id) {
     div.classList.add("inner-outgoing");
   } else {
@@ -71,6 +73,20 @@ socket.on("SEVER_RETURN_MESSAGE", (data) => {
                
     `;
   body.insertBefore(div, boxTyping);
+  const imagesContainer = div.querySelector(".inner-images");
+  if (imagesContainer) {
+    new Viewer(imagesContainer, {
+      toolbar: true,
+      navbar: false,
+      title: false,
+      tooltip: true,
+      movable: false,
+      scalable: false,
+      zoomable: true,
+      transition: true,
+    });
+  }
+
   body.scrollTop = body.scrollHeight;
 });
 
@@ -147,4 +163,24 @@ if (elementListTyping) {
       }
     }
   });
+}
+
+// document.addEventListener("DOMContentLoaded", () => {
+//   const imageGroups = document.querySelectorAll(".chat .inner-images");
+//   imageGroups.forEach((group) => {
+//     new Viewer(group, {
+//       toolbar: true,
+//       navbar: false,
+//       title: false,
+//       tooltip: true,
+//       movable: false,
+//       scalable: false,
+//       zoomable: true,
+//       transition: true,
+//     });
+//   });
+// });
+const chatBody = document.querySelector(".chat .inner-body");
+if(chatBody){
+  const gallery = new Viewer(chatBody);
 }
