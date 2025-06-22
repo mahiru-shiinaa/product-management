@@ -32,7 +32,7 @@ block main
 											img(src=image)
 						div(class="inner-list-typing")
 					.inner-preview-image
-						div.custom-file-container(data-upload-id="myUploader")
+						div.custom-file-container(data-upload-id="myUploader" id="myUploader")
 							a.custom-file-container__image-clear(href="javascript:void(0)", title="Clear Image")
 							label.custom-file-container__custom-file
 								input.custom-file-container__custom-file__custom-file-input#uploadInput(type="file", accept="image/*", multiple)
@@ -52,6 +52,9 @@ block main
 
 	div(class="tooltip" role="tooltip")
 		emoji-picker(class="light")
+	
+	block script
+		script(type="module" src="/js/chat.js")
 
 
 

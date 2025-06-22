@@ -1,17 +1,28 @@
-const bodyChat = document.querySelector(".chat .inner-body");
-bodyChat.scrollTop = bodyChat.scrollHeight;
+ const bodyChat = document.querySelector(".chat .inner-body");
+  if (bodyChat) {
+    bodyChat.scrollTop = bodyChat.scrollHeight;
+  }
 var timeOut;
 import * as Popper from "https://cdn.jsdelivr.net/npm/@popperjs/core@^2/dist/esm/index.js";
-const upload = new FileUploadWithPreview("myUploader", {
-  multiple: true,
-  maxFileCount: 6,
-});
+document.addEventListener('DOMContentLoaded', function() {
+  // Kiểm tra xem phần tử #myUploader có tồn tại không
+  const container = document.getElementById('myUploader');
+  if (!container) {
+    console.error('Không tìm thấy #myUploader trong DOM!');
+    return;
+  }
 
-// Gán thủ công vào instances để truy cập lại sau
-window.FileUploadWithPreview = window.FileUploadWithPreview || {};
-window.FileUploadWithPreview.instances =
-  window.FileUploadWithPreview.instances || {};
-window.FileUploadWithPreview.instances.myUploader = upload;
+  // Khởi tạo FileUploadWithPreview
+  const upload = new FileUploadWithPreview('myUploader', {
+    multiple: true,
+    maxFileCount: 6,
+  });
+
+  // Chỉ gán vào window SAU KHI upload khởi tạo thành công
+  window.FileUploadWithPreview = window.FileUploadWithPreview || {};
+  window.FileUploadWithPreview.instances = window.FileUploadWithPreview.instances || {};
+  window.FileUploadWithPreview.instances.myUploader = upload; // ✅ Đúng thứ tự
+});
 
 // CLIENT_SEND_MESSAGE
 const formSendData = document.querySelector(".chat .inner-form");
