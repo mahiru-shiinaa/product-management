@@ -609,6 +609,7 @@ custom-file-container__image-clear {
 
 .box-user.add [btn-add-friend] {
   display: none;
+  
 }
 
 .box-user.add [btn-cancel-friend] {
