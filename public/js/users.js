@@ -31,3 +31,14 @@ if(listBtnRefuseFriend.length > 0) {
         });
     });
 }
+// Chức năng chấp nhận kết bạn
+const listBtnAcceptFriend = document.querySelectorAll("[btn-accept-friend]");
+if(listBtnAcceptFriend.length > 0) {
+    listBtnAcceptFriend.forEach((button) => {
+        button.addEventListener("click", async () => {
+            button.closest(".box-user").classList.add("accepted");
+            const userId = button.getAttribute("btn-accept-friend");
+            socket.emit("CLIENT_ACCEPT_FRIEND", userId);
+        });
+    });
+}
