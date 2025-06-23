@@ -612,6 +612,22 @@ custom-file-container__image-clear {
   
 }
 
+.box-user [btn-deleted-friend] {
+  display: none;
+}
+
+.box-user.refuse [btn-accept-friend] {
+  display: none;
+}
+
+.box-user.refuse [btn-refuse-friend] {
+  display: none;
+}
+
+.box-user.refuse [btn-deleted-friend] {
+  display: inline-block;
+}
+
 .box-user.add [btn-cancel-friend] {
   display: inline-block;
 }
