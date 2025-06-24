@@ -66,6 +66,15 @@ module.exports = async (res) => {
           { $pull: { requestFriends: userId } }
         );
       }
+
+            // Lấy đội dài
+      const infoUserB = await User.findOne({ _id: userId });
+      const lengthAcceptFriends = infoUserB.acceptFriends.length;
+
+      socket.broadcast.emit("SERVER_RETURN_LENGTH_ACCEPT_FRIEND", {
+        userId,
+        lengthAcceptFriends,
+      })
     });
     // Người dùng từ chối kết bạn
     socket.on("CLIENT_REFUSE_FRIEND", async (userId) => {
