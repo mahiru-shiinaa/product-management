@@ -61,6 +61,7 @@ socket.on("SERVER_RETURN_INFO_ACCEPT_FRIEND", (data) => {
   if (userId == data.userId) {
     const newBoxUser = document.createElement("div");
     newBoxUser.classList.add("col-6");
+    newBoxUser.setAttribute("user-id", data.infoUserA._id);
     newBoxUser.innerHTML = `
         <div class="col-6">
             <div class="box-user add">
@@ -118,3 +119,19 @@ socket.on("SERVER_RETURN_INFO_ACCEPT_FRIEND", (data) => {
   }
 });
 // END SERVER_RETURN_INFO_ACCEPT_FRIEND
+
+//SERVER_RETURN_USER_ID_CANCEL_FRIEND
+socket.on("SERVER_RETURN_USER_ID_CANCEL_FRIEND", (data) => {
+    const dataUserAccept = document.querySelector("[data-users-accept]");
+  const userId = dataUserAccept.getAttribute("data-users-accept");
+  if (userId == data.userId) {
+    // Xóa A khỏi ds của B
+    const boxUserRemove = document.querySelector(
+      `[user-id="${data.userIdA}"]`
+    )
+    if(boxUserRemove){
+      dataUserAccept.removeChild(boxUserRemove);
+    }
+  }
+})
+// END SERVER_RETURN_USER_ID_CANCEL_FRIEND

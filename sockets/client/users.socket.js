@@ -83,7 +83,13 @@ module.exports = async (res) => {
       socket.broadcast.emit("SERVER_RETURN_LENGTH_ACCEPT_FRIEND", {
         userId,
         lengthAcceptFriends,
-      })
+      });
+      socket.broadcast.emit("SERVER_RETURN_USER_ID_CANCEL_FRIEND", {
+        userId,
+        userIdA: myUserId
+      });
+
+
     });
     // Người dùng từ chối kết bạn
     socket.on("CLIENT_REFUSE_FRIEND", async (userId) => {
