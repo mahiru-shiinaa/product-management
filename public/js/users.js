@@ -42,3 +42,14 @@ if(listBtnAcceptFriend.length > 0) {
         });
     });
 }
+
+// SEVER_RETURN_LENGTH_ACCEPT_FRIEND
+socket.on("SERVER_RETURN_LENGTH_ACCEPT_FRIEND", (data) => {
+    console.log('data: ' , data);
+    const lengthAcceptFriend = document.querySelector("[badge-users-accept]");
+    const userId = lengthAcceptFriend.getAttribute("badge-users-accept");
+    if(userId == data.userId) {
+        lengthAcceptFriend.innerHTML = data.lengthAcceptFriends;
+    }
+})
+// END SEVER_RETURN_LENGTH_ACCEPT_FRIEND
