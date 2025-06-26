@@ -1,26 +1,27 @@
- const bodyChat = document.querySelector(".chat .inner-body");
-  if (bodyChat) {
-    bodyChat.scrollTop = bodyChat.scrollHeight;
-  }
+const bodyChat = document.querySelector(".chat .inner-body");
+if (bodyChat) {
+  bodyChat.scrollTop = bodyChat.scrollHeight;
+}
 var timeOut;
 import * as Popper from "https://cdn.jsdelivr.net/npm/@popperjs/core@^2/dist/esm/index.js";
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener("DOMContentLoaded", function () {
   // Kiểm tra xem phần tử #myUploader có tồn tại không
-  const container = document.getElementById('myUploader');
+  const container = document.getElementById("myUploader");
   if (!container) {
-    console.error('Không tìm thấy #myUploader trong DOM!');
+    console.error("Không tìm thấy #myUploader trong DOM!");
     return;
   }
 
   // Khởi tạo FileUploadWithPreview
-  const upload = new FileUploadWithPreview('myUploader', {
+  const upload = new FileUploadWithPreview("myUploader", {
     multiple: true,
     maxFileCount: 6,
   });
 
   // Chỉ gán vào window SAU KHI upload khởi tạo thành công
   window.FileUploadWithPreview = window.FileUploadWithPreview || {};
-  window.FileUploadWithPreview.instances = window.FileUploadWithPreview.instances || {};
+  window.FileUploadWithPreview.instances =
+    window.FileUploadWithPreview.instances || {};
   window.FileUploadWithPreview.instances.myUploader = upload; // ✅ Đúng thứ tự
 });
 
@@ -29,8 +30,11 @@ const formSendData = document.querySelector(".chat .inner-form");
 if (formSendData) {
   formSendData.addEventListener("submit", (e) => {
     e.preventDefault();
-    const content = formSendData.content.value;
-    const images = upload.cachedFileArray || [];
+    const uploader = window.FileUploadWithPreview.instances?.myUploader;
+    const images = uploader?.cachedFileArray || [];
+    const input = formSendData.querySelector('input[name="content"]');
+    const content = input?.value.trim() || "";
+
     if (content || images.length > 0) {
       socket.emit("CLIENT_SEND_MESSAGE", {
         content: content,
@@ -192,6 +196,6 @@ if (elementListTyping) {
 //   });
 // });
 const chatBody = document.querySelector(".chat .inner-body");
-if(chatBody){
+if (chatBody) {
   const gallery = new Viewer(chatBody);
 }

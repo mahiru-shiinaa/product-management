@@ -1,4 +1,4 @@
-const RoomChat = require("../../models/room-chat.nodel");
+const RoomChat = require("../../models/room-chat.model");
 const User = require("../../models/user.model");
 
 module.exports = async (res) => {
