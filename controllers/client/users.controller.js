@@ -70,9 +70,6 @@ module.exports.friends = async (req, res) => {
   //End socket
   const userId = res.locals.user.id;
   const myUser = await User.findOne({ _id: userId });
-  console.log("friendList =", myUser.friendList);
-console.log("Kiểu:", typeof myUser.friendList, "IsArray:", Array.isArray(myUser.friendList));
-
   const friendList = myUser.friendList;
   const friendListId = friendList.map((friend) => friend.user_id);
   const users = await User.find({
@@ -80,6 +77,10 @@ console.log("Kiểu:", typeof myUser.friendList, "IsArray:", Array.isArray(myUse
     deleted: false,
     status: "active",
   }).select("id avatar fullName statusOnline");
+  users.forEach((user) => {
+    const infoUser = friendList.find((friend) => friend.user_id === user.id);
+    user.room_chat_id = infoUser.room_chat_id;
+  })
   res.render("client/pages/users/friends", {
     pageTitle: "Danh sách người dùng",
     users: users,

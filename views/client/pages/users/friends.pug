@@ -17,7 +17,7 @@ block main
 						div(class="inner-info")
 							div(class="inner-name") #{user.fullName}
 							div(class="inner-buttons")
-								a(href="#" class="btn btn-sm btn-primary mr-1") Nhắn tin
+								a(href=`/chat/${user.room_chat_id}` class="btn btn-sm btn-primary mr-1") Nhắn tin
 						div(class="inner-status" status=user.statusOnline)
 							i(class="fa-solid fa-circle")
 

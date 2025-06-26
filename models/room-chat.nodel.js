@@ -11,7 +11,7 @@ const roomChatSchema = new mongoose.Schema({
     users : [
         {
             user_id: String,
-            role: String
+            role: String,
         }
     ],
     deleted: {
@@ -25,6 +25,6 @@ const roomChatSchema = new mongoose.Schema({
 });
 
 // Tạo model                  Tên model   Tên khung dữ liệu   Tên collection
-const RoomChat = mongoose.model("Role", roomChatSchema, "rooms-chat");
+const RoomChat = mongoose.model("RoomChat", roomChatSchema, "rooms-chat");
 
 module.exports = RoomChat;
