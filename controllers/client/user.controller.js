@@ -51,16 +51,24 @@ module.exports.loginPost = async (req, res) => {
         return;
     } 
     res.cookie("tokenUser", user.tokenUser, { httpOnly: true });
+    // Cập nhập trạng thái onlie/off
+    await User.updateOne({ _id: user._id }, { $set: { statusOnline: "online" } });
+    _io.once("connection", (socket) => {
+        socket.broadcast.emit("SERVER_RETURN_USER_ONLINE", user.id);
+    })
     // Lưu userId vào model Cart
-    console.log('req.cookies.cart_id', req.cookies.cart_id);
-    console.log('user._id', user._id);
     await Cart.updateOne({ _id: req.cookies.cart_id }, { user_id: user._id } );
     req.flash("success", "Đăng nhập tài khoản thành công");
     res.redirect("/");
 };
 
 //[GET] /user/logout
-module.exports.logout = (req, res) => {
+module.exports.logout = async (req, res) => {
+        // Cập nhập trạng thái onlie/off
+    await User.updateOne({ _id: res.locals.user.id }, { $set: { statusOnline: "offline" } });
+    _io.once("connection", (socket) => {
+        socket.broadcast.emit("SERVER_RETURN_USER_OFFLINE", res.locals.user.id);
+    })
     res.clearCookie("tokenUser");
     res.redirect("/");
 };

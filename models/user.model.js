@@ -7,16 +7,19 @@ const userSchema = new mongoose.Schema(
     fullName: String,
     email: String,
     password: String,
+    statusOnline: String,
     tokenUser: {
       type: String,
       default: generate.generateToken(),
     },
     phone: String,
     avatar: String,
-    friendList: {
+    friendList: [
+      {
       user_id: String,
       room_chat_id: String
     },
+    ],
     acceptFriends : Array,
     requestFriends : Array,
     status: {
