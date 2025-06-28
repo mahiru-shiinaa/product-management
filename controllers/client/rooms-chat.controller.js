@@ -2,8 +2,11 @@ const User  = require("../../models/user.model");
 const RoomChat = require("../../models/room-chat.model");
 
 // [GET] /rooms-chat
-module.exports.index = (req, res) => {
-    res.render("client/pages/rooms-chat/index", { pageTitle: "Danh sách phòng" });
+module.exports.index = async (req, res) => {
+    const userId = res.locals.user.id;
+    const listRoomChat = await RoomChat.find({ users: { $elemMatch: { user_id: userId } } }, { deleted: false }, {typeRoom: "group"});
+    console.log(listRoomChat);
+    res.render("client/pages/rooms-chat/index", { pageTitle: "Danh sách phòng", listRoomChat: listRoomChat });
 };
 
 //[GET] /rooms-chat/create
@@ -41,7 +44,7 @@ const usersArray = Array.isArray(usersId) ? usersId : [usersId];
     })
     const room = new RoomChat(dataChat);
     room.save();
-    console.log('dataChat', dataChat);
+    
     res.redirect(`/chat/${room.id}`);
  //   res.redirect("/rooms-chat");
 };
